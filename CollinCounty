@@ -45,3 +45,5 @@ fig.update_layout(
 
 # Show the figure in a browser
 fig.show()
+fig.write_html("Collin_County_Population_Pyramid_2023.html")
+
