@@ -1,0 +1,47 @@
+import pandas as pd
+import plotly.express as px
+
+# Define the data
+data = {
+    "Age Group": [
+        "Under 5", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+        "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+        "70-74", "75-79", "80-84", "85+"
+    ],
+    "Male Population": [
+        34772, 41596, 43852, 46050, 35771, 37154, 40586, 43657, 51271, 
+        45732, 43802, 36818, 30771, 22566, 17014, 12524, 6440, 5376
+    ],
+    "Female Population": [
+        33434, 39681, 42604, 42427, 32640, 38904, 41530, 46581, 49912, 
+        44834, 42405, 34454, 31801, 24997, 20772, 14752, 10748, 7131
+    ]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Convert population counts to negative for males (for visualization)
+df["Male Population"] = df["Male Population"] * -1
+
+# Create population pyramid using Plotly
+fig = px.bar(
+    df, 
+    x=["Male Population", "Female Population"], 
+    y="Age Group", 
+    orientation='h',
+    title="Collin County Population Pyramid (2023)",
+    labels={"value": "Population", "Age Group": "Age Group"},
+    barmode='relative', 
+    text_auto=True
+)
+
+# Update layout for better readability
+fig.update_layout(
+    xaxis=dict(title="Population", tickvals=[-50000, -25000, 0, 25000, 50000], ticktext=["50K", "25K", "0", "25K", "50K"]),
+    yaxis=dict(title="Age Group", categoryorder='total ascending'),
+    bargap=0.1
+)
+
+# Show the figure in a browser
+fig.show()
