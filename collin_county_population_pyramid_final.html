@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Collin County Population Pyramid (2023)</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: larger;
+            text-align: center;
+            background-color: white;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .chart {
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Collin County Population Pyramid (2023)</h2>
+    <div class="container">
+        <div id="collin_pyramid" class="chart"></div>
+    </div>
+    <script>
+        var ageGroups = ['85+', '80-84', '75-79', '70-74', '65-69', '60-64', '55-59', '50-54', '45-49', '40-44',
+                         '35-39', '30-34', '25-29', '20-24', '15-19', '10-14', '5-9', '0-4'];
+
+        var collinMale = [2596, 5014, 8137, 12651, 16168, 21024, 23758, 27162, 30479, 34521, 
+                          37742, 37796, 33998, 32858, 43846, 42747, 40044, 33159].map(x => -x);
+
+        var collinFemale = [5369, 8598, 11398, 15694, 18952, 23217, 25391, 28426, 31277, 35088, 
+                            37668, 37767, 33846, 32081, 40354, 41653, 37995, 31846];
+
+        var trace1 = {
+            x: collinMale,
+            y: ageGroups,
+            name: 'Male',
+            orientation: 'h',
+            type: 'bar',
+            marker: { color: 'blue' }
+        };
+
+        var trace2 = {
+            x: collinFemale,
+            y: ageGroups,
+            name: 'Female',
+            orientation: 'h',
+            type: 'bar',
+            marker: { color: 'red' }
+        };
+
+        var layout = {
+            title: 'Collin County Population Pyramid (2023)',
+            barmode: 'overlay',
+            bargap: 0.1,
+            xaxis: {
+                title: 'Population',
+                tickvals: [-35000, -17500, 0, 17500, 35000],
+                ticktext: ['35K', '17.5K', '0', '17.5K', '35K'],
+                range: [-40000, 40000],
+                showgrid: true,
+                zeroline: true,
+                gridcolor: 'lightgray'
+            },
+            yaxis: {
+                title: 'Age Group',
+                autorange: 'reversed',
+                showgrid: true,
+                zeroline: true,
+                gridcolor: 'lightgray'
+            },
+            legend: { x: 0.85, y: 1 },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white'
+        };
+
+        Plotly.newPlot('collin_pyramid', [trace1, trace2], layout);
+    </script>
+</body>
+</html>
